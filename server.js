@@ -3,8 +3,8 @@ let http = require("http");
 let url = require("url");
 let quotes = require("./quotes");
 
-// Port number for our server
-let port = 3000;
+// Use environment-provided port or fall back to 3000
+let port = process.env.PORT || 3000;
 
 // Create an HTTP server
 let server = http.createServer((req, res) => {
