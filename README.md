@@ -12,7 +12,6 @@ This repository is for creating a server in Node. Front end will use Fetch. This
 - **Languages**: JavaScript, HTML, and CSS
 - **NOT** allowed:
   - React
-  - jQuery
   - Vue.js
   - Angular
 

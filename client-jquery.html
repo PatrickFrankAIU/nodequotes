@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quote Client (jQuery Version)</title>
+    <!-- Include jQuery from CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .quote {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .quote-text {
+            font-style: italic;
+        }
+        .quote-source {
+            text-align: right;
+            font-weight: bold;
+        }
+        .controls {
+            margin-bottom: 20px;
+        }
+        select, button {
+            padding: 8px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Quote Generator</h1>
+    <div class="controls">
+        <select id="topicSelect">
+            <option value="love">Love</option>
+            <option value="motivational">Motivational</option>
+            <option value="wisdom" selected>Wisdom</option>
+            <option value="humor">Humor</option>
+        </select>
+        <select id="countSelect">
+            <option value="1">1 Quote</option>
+            <option value="2">2 Quotes</option>
+            <option value="3">3 Quotes</option>
+            <option value="4">4 Quotes</option>
+            <option value="5">5 Quotes</option>
+        </select>
+        <button id="getQuotes">Get Quotes</button>
+    </div>
+    <div id="quotesContainer"></div>
+
+    <script>
+        // Document ready function - runs when the HTML is fully loaded
+        $(document).ready(function() {
+            // Add event listener to the button using jQuery
+            $("#getQuotes").on("click", function() {
+                // Get selected topic and count using jQuery
+                let topic = $("#topicSelect").val();
+                let count = $("#countSelect").val();
+                
+                // Clear previous quotes using jQuery
+                $("#quotesContainer").empty();
+                
+                // jQuery Ajax call to get quotes from the remote Render.com service
+                $.ajax({
+                    url: "https://nodequotes.onrender.com/quotes",
+                    method: "GET",
+                    data: {
+                        topic: topic,
+                        count: count
+                    },
+                    dataType: "json",
+                    success: function(quotes) {
+                        // Display each quote using jQuery
+                        for (let i = 0; i < quotes.length; i++) {
+                            let quote = quotes[i];
+                            
+                            // Create HTML for the quote using jQuery
+                            let quoteDiv = $("<div>").addClass("quote");
+                            let quoteText = $("<div>").addClass("quote-text").text(quote.quote);
+                            let quoteSource = $("<div>").addClass("quote-source").text("— " + quote.source);
+                            
+                            // Append to the quote container using jQuery
+                            quoteDiv.append(quoteText).append(quoteSource);
+                            $("#quotesContainer").append(quoteDiv);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        $("#quotesContainer").html("<p>Error fetching quotes: " + error + "</p>");
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
