@@ -67,8 +67,8 @@
             // Clear previous quotes
             quotesContainer.innerHTML = "";
             
-            // Fetch quotes from the server using a relative URL
-            fetch("/quotes?topic=" + topic + "&count=" + count)
+            // Fetch quotes from the server using your deployment URL
+            fetch("https://nodequotes.onrender.com/quotes?topic=" + topic + "&count=" + count)
                 .then(function(response) {
                     return response.json();
                 })
